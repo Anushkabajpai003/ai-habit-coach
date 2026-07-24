@@ -24,7 +24,12 @@ def get_motivational_message(habit_name, streak):
         return _real_motivational_message(habit_name, streak)
 
 
+def _day_word(streak):
+    return "day" if streak == 1 else "days"
+
+
 def _mock_motivational_message(habit_name, streak):
+    word = _day_word(streak)
     if streak == 0:
         messages = [
             f"Every '{habit_name}' journey starts with day one. You've got this!",
@@ -32,13 +37,13 @@ def _mock_motivational_message(habit_name, streak):
         ]
     elif streak < 5:
         messages = [
-            f"{streak} days of '{habit_name}' — the momentum is building!",
-            f"Nice work! {streak} days in on '{habit_name}'. Keep it going.",
+            f"{streak} {word} of '{habit_name}' — the momentum is building!",
+            f"Nice work! {streak} {word} in on '{habit_name}'. Keep it going.",
         ]
     else:
         messages = [
-            f"{streak} days strong on '{habit_name}' — that's real consistency!",
-            f"Wow, {streak} days of '{habit_name}'. You're building something lasting.",
+            f"{streak} {word} strong on '{habit_name}' — that's real consistency!",
+            f"Wow, {streak} {word} of '{habit_name}'. You're building something lasting.",
         ]
     return random.choice(messages)
 

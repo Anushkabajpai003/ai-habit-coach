@@ -3,9 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>AI Habit Coach</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>AI Habit Coach</h1>
-    <p>Foundation is working! Database connected, Flask running.</p>
+    <div class="container">
+        <h1>AI Habit Coach</h1>
+
+        <form action="{{ url_for('add_habit') }}" method="POST" class="add-habit-form">
+            <input type="text" name="name" placeholder="Add a new habit..." required maxlength="100">
+            <button type="submit">Add</button>
+        </form>
+
+        {% if habits %}
+            <ul class="habit-list">
+                {% for habit in habits %}
+                    <li class="habit-item">
+                        <div class="habit-row">
+                            <span class="habit-name">{{ habit.name }}</span>
+                            <span class="streak-badge">🔥 {{ habit.streak }} day{{ 's' if habit.streak != 1 else '' }}</span>
+                        </div>
+
+                        <div class="habit-actions">
+                            {% if habit.checked_in_today %}
+                                <form action="{{ url_for('uncheck_habit', habit_id=habit.id) }}" method="POST">
+                                    <button type="submit" class="checkin-btn checked">✓ Checked in today</button>
+                                </form>
+                            {% else %}
+                                <form action="{{ url_for('checkin_habit', habit_id=habit.id) }}" method="POST">
+                                    <button type="submit" class="checkin-btn">Check in</button>
+                                </form>
+                            {% endif %}
+
+                            <form action="{{ url_for('delete_habit', habit_id=habit.id) }}" method="POST">
+                                <button type="submit" class="delete-btn">Delete</button>
+                            </form>
+                        </div>
+
+                        {% if ai_message and ai_habit_id == habit.id %}
+                            <div class="ai-message">💬 {{ ai_message }}</div>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-state">No habits yet — add your first one above!</p>
+        {% endif %}
+    </div>
 </body>
 </html>

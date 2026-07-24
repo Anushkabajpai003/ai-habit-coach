@@ -1,0 +1,133 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #F7F9F8;
+    color: #1E2B2B;
+    padding: 2rem 1rem;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+h1 {
+    color: #02545C;
+    margin-bottom: 1.5rem;
+}
+
+.add-habit-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.add-habit-form input {
+    flex: 1;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.add-habit-form button {
+    padding: 0.6rem 1.2rem;
+    background-color: #02C39A;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.add-habit-form button:hover {
+    background-color: #00A896;
+}
+
+.habit-list {
+    list-style: none;
+}
+
+.habit-item {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    border: 1px solid #DCEAE7;
+}
+
+.habit-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.6rem;
+}
+
+.habit-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.streak-badge {
+    font-size: 0.9rem;
+    color: #02545C;
+    font-weight: 600;
+}
+
+.habit-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.checkin-btn {
+    background-color: #028090;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.checkin-btn:hover {
+    background-color: #02545C;
+}
+
+.checkin-btn.checked {
+    background-color: #02C39A;
+}
+
+.delete-btn {
+    background-color: #f4f4f4;
+    color: #a03030;
+    border: 1px solid #ddd;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.delete-btn:hover {
+    background-color: #fbeaea;
+}
+
+.ai-message {
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    background-color: #EAF7F5;
+    border-left: 3px solid #02C39A;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: #02545C;
+}
+
+.empty-state {
+    color: #777;
+    font-style: italic;
+    padding: 1rem 0;
+}
