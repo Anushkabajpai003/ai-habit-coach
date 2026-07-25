@@ -5,8 +5,8 @@ AI Habit Coach — Flask application entry point.
 from datetime import date
 from flask import Flask, render_template, request, redirect, url_for
 from models import db, Habit, CheckIn
-from utils import calculate_streak, already_checked_in_today
-from ai_coach import get_motivational_message
+from utils import calculate_streak, already_checked_in_today, detect_pattern
+from ai_coach import get_motivational_message, get_pattern_insight
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///habits.db'
@@ -23,11 +23,14 @@ def home():
     habits = Habit.query.order_by(Habit.created_at.asc()).all()
     habit_data = []
     for habit in habits:
+        pattern = detect_pattern(habit)
+        insight = get_pattern_insight(habit.name, pattern) if pattern else None
         habit_data.append({
             'id': habit.id,
             'name': habit.name,
             'streak': calculate_streak(habit),
             'checked_in_today': already_checked_in_today(habit),
+            'insight': insight,
         })
     ai_message = request.args.get('ai_message')
     ai_habit_id = request.args.get('ai_habit_id')

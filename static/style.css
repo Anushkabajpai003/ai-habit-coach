@@ -126,6 +126,24 @@ h1 {
     color: #02545C;
 }
 
+.ai-insight {
+    margin-top: 0.6rem;
+    padding: 0.75rem;
+    background-color: #F0F4FF;
+    border-left: 3px solid #028090;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: #1E2B2B;
+}
+
+.insight-locked {
+    margin-top: 0.6rem;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.8rem;
+    color: #999;
+    font-style: italic;
+}
+
 .empty-state {
     color: #777;
     font-style: italic;

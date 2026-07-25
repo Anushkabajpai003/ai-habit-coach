@@ -42,6 +42,12 @@
                         {% if ai_message and ai_habit_id == habit.id %}
                             <div class="ai-message">💬 {{ ai_message }}</div>
                         {% endif %}
+
+                        {% if habit.insight %}
+                            <div class="ai-insight">📊 {{ habit.insight }}</div>
+                        {% else %}
+                            <div class="insight-locked">📊 Insights unlock after about a week of check-ins.</div>
+                        {% endif %}
                     </li>
                 {% endfor %}
             </ul>
