@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coach Chat — AI Habit Coach</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="nav-bar">
+            <h1>AI Habit Coach</h1>
+            <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+        </div>
+
+        <div class="chat-box">
+            {% if chat_history %}
+                {% for turn in chat_history %}
+                    {% if turn.role == 'user' %}
+                        <div class="chat-msg chat-user">You: {{ turn.content }}</div>
+                    {% else %}
+                        <div class="chat-msg chat-coach">Coach: {{ turn.content }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p class="chat-empty">Say hello to your coach — tell them how your habits are going today.</p>
+            {% endif %}
+        </div>
+
+        <form action="{{ url_for('coach_send') }}" method="POST" class="chat-form">
+            <input type="text" name="message" placeholder="Type a message..." required maxlength="500" autocomplete="off">
+            <button type="submit">Send</button>
+        </form>
+
+        {% if chat_history %}
+            <form action="{{ url_for('coach_clear') }}" method="POST" class="clear-form">
+                <button type="submit" class="clear-btn">Clear conversation</button>
+            </form>
+        {% endif %}
+    </div>
+
+    <footer class="app-footer">
+        Built with Claude as part of the AB Talks 60-Day Claude AI Challenge.
+    </footer>
+</body>
+</html>

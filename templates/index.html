@@ -7,7 +7,10 @@
 </head>
 <body>
     <div class="container">
-        <h1>AI Habit Coach</h1>
+        <div class="nav-bar">
+            <h1>AI Habit Coach</h1>
+            <a href="{{ url_for('coach') }}" class="nav-link">Coach 💬</a>
+        </div>
 
         <form action="{{ url_for('add_habit') }}" method="POST" class="add-habit-form">
             <input type="text" name="name" placeholder="Add a new habit..." required maxlength="100">
@@ -55,5 +58,9 @@
             <p class="empty-state">No habits yet — add your first one above!</p>
         {% endif %}
     </div>
+
+    <footer class="app-footer">
+        Built with Claude as part of the AB Talks 60-Day Claude AI Challenge.
+    </footer>
 </body>
 </html>

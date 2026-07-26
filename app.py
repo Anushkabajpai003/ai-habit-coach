@@ -2,20 +2,32 @@
 AI Habit Coach — Flask application entry point.
 """
 
+import os
 from datetime import date
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from models import db, Habit, CheckIn
 from utils import calculate_streak, already_checked_in_today, detect_pattern
-from ai_coach import get_motivational_message, get_pattern_insight
+from ai_coach import get_motivational_message, get_pattern_insight, get_coach_reply
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///habits.db'
+
+database_url = os.environ.get('DATABASE_URL', 'sqlite:///habits.db')
+if database_url.startswith('postgres://'):
+    database_url = database_url.replace('postgres://', 'postgresql://', 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 
 db.init_app(app)
 
 with app.app_context():
     db.create_all()
+
+
+def get_habits_summary():
+    habits = Habit.query.order_by(Habit.created_at.asc()).all()
+    return [{'name': h.name, 'streak': calculate_streak(h)} for h in habits]
 
 
 @app.route('/')
@@ -89,6 +101,36 @@ def uncheck_habit(habit_id):
         db.session.delete(existing)
         db.session.commit()
     return redirect(url_for('home'))
+
+
+@app.route('/coach')
+def coach():
+    chat_history = session.get('chat_history', [])
+    return render_template('coach.html', chat_history=chat_history)
+
+
+@app.route('/coach/send', methods=['POST'])
+def coach_send():
+    user_message = request.form.get('message', '').strip()[:500]
+
+    if user_message:
+        chat_history = session.get('chat_history', [])
+        habits_summary = get_habits_summary()
+
+        reply = get_coach_reply(habits_summary, chat_history, user_message)
+
+        chat_history.append({'role': 'user', 'content': user_message})
+        chat_history.append({'role': 'assistant', 'content': reply})
+
+        session['chat_history'] = chat_history[-20:]
+
+    return redirect(url_for('coach'))
+
+
+@app.route('/coach/clear', methods=['POST'])
+def coach_clear():
+    session.pop('chat_history', None)
+    return redirect(url_for('coach'))
 
 
 if __name__ == '__main__':

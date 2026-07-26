@@ -32,6 +32,14 @@ def get_pattern_insight(habit_name, pattern):
         return _real_pattern_insight(habit_name, pattern)
 
 
+def get_coach_reply(habits_summary, chat_history, user_message):
+    """Returns a coach reply to a chat message, given habit context and history."""
+    if USE_MOCK_AI:
+        return _mock_coach_reply(habits_summary, chat_history, user_message)
+    else:
+        return _real_coach_reply(habits_summary, chat_history, user_message)
+
+
 def _day_word(streak):
     return "day" if streak == 1 else "days"
 
@@ -74,6 +82,48 @@ def _mock_pattern_insight(habit_name, pattern):
     return random.choice(templates)
 
 
+def _mock_coach_reply(habits_summary, chat_history, user_message):
+    """
+    Rule-based, keyword-aware coach reply. Looks at the user's message
+    for emotional/topical cues and responds accordingly, referencing
+    real habit data when relevant.
+    """
+    text = user_message.lower()
+
+    habit_line = ""
+    if habits_summary:
+        top = habits_summary[0]
+        habit_line = f" I can see you're at a {top['streak']}-{_day_word(top['streak'])} streak on '{top['name']}' right now."
+
+    if any(word in text for word in ["skip", "miss", "fail", "didn't", "couldn't", "bad"]):
+        replies = [
+            f"That's okay — one missed day doesn't erase your progress.{habit_line} What made today harder than usual?",
+            f"Missing a day happens to everyone building a habit.{habit_line} The important part is coming back, which you're doing right now by checking in here.",
+        ]
+    elif any(word in text for word in ["tired", "hard", "difficult", "struggl", "hard", "overwhelmed", "stress"]):
+        replies = [
+            f"It sounds like things are genuinely tough right now.{habit_line} Sometimes the goal isn't to do more — it's to just not lose the thread completely. Even a tiny version of the habit counts.",
+            "That's a real feeling, not a character flaw. What would make tomorrow 10% easier than today?",
+        ]
+    elif any(word in text for word in ["good", "great", "proud", "happy", "excited", "did it", "done"]):
+        replies = [
+            f"That's genuinely great to hear!{habit_line} Momentum like this is worth noticing — what's been working for you?",
+            "Love that. Consistency is built exactly from days like this one.",
+        ]
+    elif any(word in text for word in ["why", "how", "help", "advice", "suggest"]):
+        replies = [
+            f"Happy to help think it through.{habit_line} What's the specific part that feels stuck right now?",
+            "Good question — habits usually break down at a specific moment in the day. When does yours tend to slip?",
+        ]
+    else:
+        replies = [
+            f"Thanks for sharing that.{habit_line} How are you feeling about your progress overall?",
+            "I hear you. Tell me a bit more about what's on your mind with your habits right now.",
+        ]
+
+    return random.choice(replies)
+
+
 def _real_motivational_message(habit_name, streak):
     """Placeholder for real Claude API call — implemented when credits are available."""
     from anthropic import Anthropic
@@ -113,3 +163,34 @@ def _real_pattern_insight(habit_name, pattern):
         return response.content[0].text
     except Exception:
         return _mock_pattern_insight(habit_name, pattern)
+
+
+def _real_coach_reply(habits_summary, chat_history, user_message):
+    """Placeholder for real Claude API call — implemented when credits are available."""
+    from anthropic import Anthropic
+    client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+
+    habits_text = ", ".join(
+        f"{h['name']} ({h['streak']} day streak)" for h in habits_summary
+    ) or "no habits tracked yet"
+
+    system_prompt = (
+        f"You are a warm, supportive habit-building coach. The user's current habits: {habits_text}. "
+        f"Keep replies short (1-3 sentences), specific, and non-judgmental."
+    )
+
+    messages = []
+    for turn in chat_history[-10:]:
+        messages.append({"role": turn["role"], "content": turn["content"]})
+    messages.append({"role": "user", "content": user_message})
+
+    try:
+        response = client.messages.create(
+            model="claude-sonnet-4-5",
+            max_tokens=150,
+            system=system_prompt,
+            messages=messages,
+        )
+        return response.content[0].text
+    except Exception:
+        return _mock_coach_reply(habits_summary, chat_history, user_message)
