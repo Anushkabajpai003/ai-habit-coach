@@ -100,7 +100,7 @@ def _mock_coach_reply(habits_summary, chat_history, user_message):
             f"That's okay — one missed day doesn't erase your progress.{habit_line} What made today harder than usual?",
             f"Missing a day happens to everyone building a habit.{habit_line} The important part is coming back, which you're doing right now by checking in here.",
         ]
-    elif any(word in text for word in ["tired", "hard", "difficult", "struggl", "hard", "overwhelmed", "stress"]):
+    elif any(word in text for word in ["tired", "hard", "difficult", "struggl", "overwhelmed", "stress"]):
         replies = [
             f"It sounds like things are genuinely tough right now.{habit_line} Sometimes the goal isn't to do more — it's to just not lose the thread completely. Even a tiny version of the habit counts.",
             "That's a real feeling, not a character flaw. What would make tomorrow 10% easier than today?",
@@ -115,10 +115,18 @@ def _mock_coach_reply(habits_summary, chat_history, user_message):
             f"Happy to help think it through.{habit_line} What's the specific part that feels stuck right now?",
             "Good question — habits usually break down at a specific moment in the day. When does yours tend to slip?",
         ]
+    elif any(word in text for word in ["habit", "sport", "exercise", "run", "walk", "read", "meditat", "gym", "workout", "added", "new"]):
+        replies = [
+            f"Nice — building that into your routine takes real intention.{habit_line} What's your plan for staying consistent with it?",
+            f"Great choice of habit.{habit_line} What time of day feels most realistic for you to actually do it?",
+            f"That's a solid one to build.{habit_line} What's usually the biggest thing that gets in the way when you try?",
+        ]
     else:
         replies = [
             f"Thanks for sharing that.{habit_line} How are you feeling about your progress overall?",
             "I hear you. Tell me a bit more about what's on your mind with your habits right now.",
+            f"Got it.{habit_line} Is there anything specific you'd like help thinking through today?",
+            "Appreciate you checking in here. What's on your mind about your habits today?",
         ]
 
     return random.choice(replies)
