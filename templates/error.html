@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Something went wrong — AI Habit Coach</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="nav-bar">
+            <h1>AI Habit Coach</h1>
+        </div>
+        <div class="empty-state">
+            <span class="empty-state-icon">⚠️</span>
+            <div class="empty-state-title">{{ message }}</div>
+            <p class="empty-state-text"><a href="{{ url_for('home') }}" class="nav-link" style="display:inline-block; margin-top: 1rem;">Go back home</a></p>
+        </div>
+    </div>
+    <footer class="app-footer">
+        Built with Claude as part of the AB Talks 60-Day Claude AI Challenge.
+    </footer>
+</body>
+</html>

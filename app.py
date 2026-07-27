@@ -4,7 +4,7 @@ AI Habit Coach — Flask application entry point.
 
 import os
 from datetime import date
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from models import db, Habit, CheckIn
 from utils import calculate_streak, already_checked_in_today, detect_pattern
 from ai_coach import get_motivational_message, get_pattern_insight, get_coach_reply
@@ -57,10 +57,21 @@ def home():
 @app.route('/habits/new', methods=['POST'])
 def add_habit():
     name = request.form.get('name', '').strip()
-    if name:
-        new_habit = Habit(name=name)
-        db.session.add(new_habit)
-        db.session.commit()
+    if not name:
+        flash("Habit name can't be empty.")
+        return redirect(url_for('home'))
+    if len(name) > 100:
+        flash("Habit name is too long (max 100 characters).")
+        return redirect(url_for('home'))
+
+    existing = Habit.query.filter(db.func.lower(Habit.name) == name.lower()).first()
+    if existing:
+        flash(f"You already have a habit called '{name}'.")
+        return redirect(url_for('home'))
+
+    new_habit = Habit(name=name)
+    db.session.add(new_habit)
+    db.session.commit()
     return redirect(url_for('home'))
 
 
@@ -70,6 +81,7 @@ def delete_habit(habit_id):
     if habit:
         db.session.delete(habit)
         db.session.commit()
+        flash(f"Deleted '{habit.name}'.")
     return redirect(url_for('home'))
 
 
@@ -131,6 +143,16 @@ def coach_send():
 def coach_clear():
     session.pop('chat_history', None)
     return redirect(url_for('coach'))
+
+
+@app.errorhandler(404)
+def not_found(e):
+    return render_template('error.html', message="That page doesn't exist."), 404
+
+
+@app.errorhandler(500)
+def server_error(e):
+    return render_template('error.html', message="Something went wrong on our end. Please try again."), 500
 
 
 if __name__ == '__main__':
