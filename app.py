@@ -5,6 +5,7 @@ AI Habit Coach — Flask application entry point.
 import os
 from datetime import date
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from sqlalchemy.exc import IntegrityError
 from models import db, Habit, CheckIn
 from utils import calculate_streak, already_checked_in_today, detect_pattern
 from ai_coach import get_motivational_message, get_pattern_insight, get_coach_reply
@@ -18,11 +19,14 @@ if database_url.startswith('postgres://'):
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024
 
 db.init_app(app)
 
 with app.app_context():
     db.create_all()
+
+MAX_CHAT_TURNS = 12
 
 
 def get_habits_summary():
@@ -69,9 +73,14 @@ def add_habit():
         flash(f"You already have a habit called '{name}'.")
         return redirect(url_for('home'))
 
-    new_habit = Habit(name=name)
-    db.session.add(new_habit)
-    db.session.commit()
+    try:
+        new_habit = Habit(name=name)
+        db.session.add(new_habit)
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        flash("That habit couldn't be added — please try again.")
+
     return redirect(url_for('home'))
 
 
@@ -79,9 +88,12 @@ def add_habit():
 def delete_habit(habit_id):
     habit = Habit.query.get(habit_id)
     if habit:
+        habit_name = habit.name
         db.session.delete(habit)
         db.session.commit()
-        flash(f"Deleted '{habit.name}'.")
+        flash(f"Deleted '{habit_name}'.")
+    else:
+        flash("That habit no longer exists.")
     return redirect(url_for('home'))
 
 
@@ -89,15 +101,21 @@ def delete_habit(habit_id):
 def checkin_habit(habit_id):
     habit = Habit.query.get(habit_id)
     if not habit:
+        flash("That habit no longer exists.")
         return redirect(url_for('home'))
 
     today = date.today()
     existing = CheckIn.query.filter_by(habit_id=habit.id, date=today).first()
 
     if not existing:
-        new_checkin = CheckIn(habit_id=habit.id, date=today, done=True)
-        db.session.add(new_checkin)
-        db.session.commit()
+        try:
+            new_checkin = CheckIn(habit_id=habit.id, date=today, done=True)
+            db.session.add(new_checkin)
+            db.session.commit()
+        except IntegrityError:
+            # Another request already created today's check-in
+            # (e.g. rapid double-click) — safe to ignore, not an error.
+            db.session.rollback()
 
     streak = calculate_streak(habit)
     message = get_motivational_message(habit.name, streak)
@@ -107,6 +125,11 @@ def checkin_habit(habit_id):
 
 @app.route('/habits/<int:habit_id>/uncheck', methods=['POST'])
 def uncheck_habit(habit_id):
+    habit = Habit.query.get(habit_id)
+    if not habit:
+        flash("That habit no longer exists.")
+        return redirect(url_for('home'))
+
     today = date.today()
     existing = CheckIn.query.filter_by(habit_id=habit_id, date=today).first()
     if existing:
@@ -129,12 +152,15 @@ def coach_send():
         chat_history = session.get('chat_history', [])
         habits_summary = get_habits_summary()
 
-        reply = get_coach_reply(habits_summary, chat_history, user_message)
+        try:
+            reply = get_coach_reply(habits_summary, chat_history, user_message)
+        except Exception:
+            reply = "Sorry, I had trouble responding just now — could you try saying that again?"
 
         chat_history.append({'role': 'user', 'content': user_message})
         chat_history.append({'role': 'assistant', 'content': reply})
 
-        session['chat_history'] = chat_history[-20:]
+        session['chat_history'] = chat_history[-(MAX_CHAT_TURNS * 2):]
 
     return redirect(url_for('coach'))
 
@@ -152,7 +178,14 @@ def not_found(e):
 
 @app.errorhandler(500)
 def server_error(e):
+    db.session.rollback()
     return render_template('error.html', message="Something went wrong on our end. Please try again."), 500
+
+
+@app.errorhandler(413)
+def payload_too_large(e):
+    flash("That input was too large.")
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':

@@ -15,7 +15,7 @@
 
         {% with messages = get_flashed_messages() %}
             {% if messages %}
-                <div class="flash-messages">
+                <div class="flash-messages" role="status" aria-live="polite">
                     {% for msg in messages %}
                         <div class="flash-message">{{ msg }}</div>
                     {% endfor %}
@@ -24,14 +24,15 @@
         {% endwith %}
 
         <form action="{{ url_for('add_habit') }}" method="POST" class="add-habit-form">
-            <input type="text" name="name" placeholder="Add a new habit..." required maxlength="100" autocomplete="off">
+            <label for="habitNameInput" class="visually-hidden">Habit name</label>
+            <input type="text" id="habitNameInput" name="name" placeholder="Add a new habit..." required maxlength="100" autocomplete="off">
             <button type="submit">Add</button>
         </form>
 
         {% if habits %}
             <ul class="habit-list">
                 {% for habit in habits %}
-                    <li class="habit-item">
+                    <li class="habit-item" data-habit-id="{{ habit.id }}" data-habit-name="{{ habit.name }}">
                         <div class="habit-row">
                             <span class="habit-name">{{ habit.name }}</span>
                             <span class="streak-badge">🔥 {{ habit.streak }} day{{ 's' if habit.streak != 1 else '' }}</span>
@@ -40,7 +41,7 @@
                         <div class="habit-actions">
                             {% if habit.checked_in_today %}
                                 <form action="{{ url_for('uncheck_habit', habit_id=habit.id) }}" method="POST">
-                                    <button type="submit" class="checkin-btn checked">✓ Checked in today</button>
+                                    <button type="submit" class="checkin-btn checked" title="Checked in today — click to undo">✓ Done today</button>
                                 </form>
                             {% else %}
                                 <form action="{{ url_for('checkin_habit', habit_id=habit.id) }}" method="POST">
@@ -48,11 +49,11 @@
                                 </form>
                             {% endif %}
 
-                            <button type="button" class="delete-btn" onclick="openDeleteModal({{ habit.id }}, '{{ habit.name|escape }}')">Delete</button>
+                            <button type="button" class="delete-btn js-delete-trigger" aria-haspopup="dialog">Delete</button>
                         </div>
 
                         {% if ai_message and ai_habit_id == habit.id %}
-                            <div class="ai-message">💬 {{ ai_message }}</div>
+                            <div class="ai-message" role="status">💬 {{ ai_message }}</div>
                         {% endif %}
 
                         {% if habit.insight %}
@@ -72,13 +73,13 @@
         {% endif %}
     </div>
 
-    <div class="modal-overlay" id="deleteModal">
+    <div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
         <div class="modal-box">
-            <h3>Delete habit?</h3>
+            <h3 id="deleteModalTitle">Delete habit?</h3>
             <p id="deleteModalText">Are you sure you want to delete this habit? This will also remove all of its check-in history. This can't be undone.</p>
             <form id="deleteForm" method="POST">
                 <div class="modal-actions">
-                    <button type="button" class="modal-btn-cancel" onclick="closeDeleteModal()">Cancel</button>
+                    <button type="button" class="modal-btn-cancel" id="deleteCancelBtn">Cancel</button>
                     <button type="submit" class="modal-btn-confirm">Delete</button>
                 </div>
             </form>
@@ -90,23 +91,42 @@
     </footer>
 
     <script>
+        var activeModal = document.getElementById('deleteModal');
+        var deleteForm = document.getElementById('deleteForm');
+        var deleteModalText = document.getElementById('deleteModalText');
+        var lastFocusedElement = null;
+
         function openDeleteModal(habitId, habitName) {
-            document.getElementById('deleteModalText').textContent =
+            deleteModalText.textContent =
                 "Are you sure you want to delete '" + habitName + "'? This will also remove all of its check-in history. This can't be undone.";
-            document.getElementById('deleteForm').action = '/habits/' + habitId + '/delete';
-            document.getElementById('deleteModal').classList.add('active');
+            deleteForm.action = '/habits/' + habitId + '/delete';
+            activeModal.classList.add('active');
+            lastFocusedElement = document.activeElement;
+            document.querySelector('.modal-btn-cancel').focus();
         }
 
         function closeDeleteModal() {
-            document.getElementById('deleteModal').classList.remove('active');
+            activeModal.classList.remove('active');
+            if (lastFocusedElement) lastFocusedElement.focus();
         }
 
-        document.getElementById('deleteModal').addEventListener('click', function(e) {
+        document.querySelectorAll('.js-delete-trigger').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var item = btn.closest('.habit-item');
+                var habitId = item.getAttribute('data-habit-id');
+                var habitName = item.getAttribute('data-habit-name');
+                openDeleteModal(habitId, habitName);
+            });
+        });
+
+        document.getElementById('deleteCancelBtn').addEventListener('click', closeDeleteModal);
+
+        activeModal.addEventListener('click', function(e) {
             if (e.target === this) closeDeleteModal();
         });
 
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeDeleteModal();
+            if (e.key === 'Escape' && activeModal.classList.contains('active')) closeDeleteModal();
         });
     </script>
 </body>

@@ -65,9 +65,9 @@ def _mock_motivational_message(habit_name, streak):
 
 
 def _mock_pattern_insight(habit_name, pattern):
-    weekday = pattern["weekday"]
-    missed = pattern["missed"]
-    total = pattern["total"]
+    weekday = pattern.get("weekday", "that day")
+    missed = pattern.get("missed", 0)
+    total = pattern.get("total", 0)
 
     templates = [
         f"You've missed '{habit_name}' on {weekday} {missed} out of {total} times recently. "
@@ -86,14 +86,17 @@ def _mock_coach_reply(habits_summary, chat_history, user_message):
     """
     Rule-based, keyword-aware coach reply. Looks at the user's message
     for emotional/topical cues and responds accordingly, referencing
-    real habit data when relevant.
+    real habit data when relevant. Defensive against missing/malformed
+    habit summary data.
     """
-    text = user_message.lower()
+    text = (user_message or "").lower()
 
     habit_line = ""
-    if habits_summary:
+    if habits_summary and isinstance(habits_summary, list) and len(habits_summary) > 0:
         top = habits_summary[0]
-        habit_line = f" I can see you're at a {top['streak']}-{_day_word(top['streak'])} streak on '{top['name']}' right now."
+        name = top.get('name', 'your habit')
+        streak = top.get('streak', 0)
+        habit_line = f" I can see you're at a {streak}-{_day_word(streak)} streak on '{name}' right now."
 
     if any(word in text for word in ["skip", "miss", "fail", "didn't", "couldn't", "bad"]):
         replies = [
