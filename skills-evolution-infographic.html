@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>60-Day Claude AI Challenge — Skills Evolution</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0B2A2C;
+    color: #E4F5F2;
+    padding: 3rem 1.5rem;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; }
+  .header { text-align: center; margin-bottom: 3rem; }
+  .header .eyebrow {
+    font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: #6FD9C5; font-weight: 600; margin-bottom: 0.75rem;
+  }
+  .header h1 {
+    font-size: 2.2rem; font-weight: 700; color: #FFFFFF; margin-bottom: 0.75rem;
+    line-height: 1.25;
+  }
+  .header p {
+    font-size: 1.05rem; color: #A9D9D0; max-width: 640px; margin: 0 auto;
+  }
+
+  .timeline {
+    position: relative;
+    margin: 3rem 0;
+    padding-left: 2rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.55rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    background: linear-gradient(to bottom, #02C39A, #028090, #02545C);
+  }
+  .stage {
+    position: relative;
+    margin-bottom: 2rem;
+    padding-left: 1.5rem;
+  }
+  .stage::before {
+    content: '';
+    position: absolute;
+    left: -1.9rem;
+    top: 0.3rem;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #02C39A;
+    border: 3px solid #0B2A2C;
+    box-shadow: 0 0 0 2px #02C39A;
+  }
+  .stage.final::before {
+    background: #FFD166;
+    box-shadow: 0 0 0 2px #FFD166;
+  }
+  .stage-range {
+    font-size: 0.78rem; font-weight: 700; color: #6FD9C5;
+    letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.3rem;
+  }
+  .stage-title {
+    font-size: 1.15rem; font-weight: 700; color: #FFFFFF; margin-bottom: 0.4rem;
+  }
+  .stage-desc {
+    font-size: 0.92rem; color: #B8DFD6; line-height: 1.55; max-width: 700px;
+  }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+  .tag {
+    font-size: 0.72rem; font-weight: 600; padding: 0.25rem 0.65rem;
+    border-radius: 999px; background: rgba(2, 195, 154, 0.14);
+    color: #6FD9C5; border: 1px solid rgba(111, 217, 197, 0.3);
+  }
+
+  .capstone-banner {
+    margin-top: 3.5rem;
+    background: linear-gradient(135deg, #02545C, #028090);
+    border-radius: 16px;
+    padding: 2.2rem 2rem;
+    text-align: center;
+    border: 1px solid rgba(255, 209, 102, 0.4);
+  }
+  .capstone-banner .label {
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #FFD166; margin-bottom: 0.6rem;
+  }
+  .capstone-banner h2 {
+    font-size: 1.5rem; font-weight: 700; color: #FFFFFF; margin-bottom: 0.75rem;
+  }
+  .capstone-banner p {
+    font-size: 0.95rem; color: #DFF6F0; max-width: 620px; margin: 0 auto 1.2rem auto;
+    line-height: 1.6;
+  }
+  .capstone-stats {
+    display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+  .stat { text-align: center; }
+  .stat .num { font-size: 1.6rem; font-weight: 700; color: #FFD166; }
+  .stat .lbl { font-size: 0.72rem; color: #B8DFD6; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .footer-note {
+    text-align: center; margin-top: 2.5rem; font-size: 0.8rem; color: #7BAFA6;
+  }
+
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.6rem; }
+    .timeline { padding-left: 1.2rem; }
+    .capstone-stats { gap: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="eyebrow">AB Talks · 60-Day Claude AI Challenge</div>
+    <h1>From first prompt to a shipped, production-ready AI product</h1>
+    <p>How sixty days of building AI fluency, one capability at a time, culminated in a live, production-hardened application built and deployed solo.</p>
+  </div>
+
+  <div class="timeline">
+
+    <div class="stage">
+      <div class="stage-range">Weeks 1–2</div>
+      <div class="stage-title">AI Foundations &amp; Effective Prompting</div>
+      <div class="stage-desc">Building fluency in how large language models actually work, and how to communicate with them precisely — moving from vague requests to structured, intentional prompts that reliably produce the right output.</div>
+      <div class="tag-row">
+        <span class="tag">AI fundamentals</span>
+        <span class="tag">Prompt engineering</span>
+        <span class="tag">Reasoning</span>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-range">Weeks 3–4</div>
+      <div class="stage-title">Research Workflows &amp; Automation</div>
+      <div class="stage-desc">Learning to use Claude as a research and automation partner — chaining tasks, structuring workflows, and applying AI to real, multi-step problems rather than one-off questions.</div>
+      <div class="tag-row">
+        <span class="tag">Research workflows</span>
+        <span class="tag">Automation</span>
+        <span class="tag">Product thinking</span>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-range">Weeks 5–6</div>
+      <div class="stage-title">Building Increasingly Sophisticated AI Projects</div>
+      <div class="stage-desc">Moving from small exercises to real, multi-part projects — applying multimodal AI capabilities and starting to build lightweight knowledge systems, laying the technical groundwork the capstone would later depend on.</div>
+      <div class="tag-row">
+        <span class="tag">Multimodal AI</span>
+        <span class="tag">Knowledge systems</span>
+        <span class="tag">AI-assisted development</span>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-range">Weeks 7–8</div>
+      <div class="stage-title">Autonomous Agents &amp; Multi-Agent Collaboration</div>
+      <div class="stage-desc">Working with agentic systems — AI that plans, acts, and collaborates across multiple steps and multiple agents — the most advanced capability area of the 60 days, directly preceding the capstone sprint.</div>
+      <div class="tag-row">
+        <span class="tag">Agentic systems</span>
+        <span class="tag">Multi-agent collaboration</span>
+        <span class="tag">Debugging</span>
+      </div>
+    </div>
+
+    <div class="stage final">
+      <div class="stage-range">Days 1–10 · The Capstone</div>
+      <div class="stage-title">Shipping AI Habit Coach — a real, deployed product</div>
+      <div class="stage-desc">Every capability built across the previous 50 days converged into a single, complete software development lifecycle: requirements → architecture → implementation → security review → deployment → a versioned v1.0.0 release.</div>
+      <div class="tag-row">
+        <span class="tag">Full SDLC</span>
+        <span class="tag">Production deployment</span>
+        <span class="tag">Real debugging &amp; security fixes</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="capstone-banner">
+    <div class="label">The Capstone in Numbers</div>
+    <h2>AI Habit Coach — v1.0.0</h2>
+    <p>A habit-tracking web app with an AI coaching layer — motivational messages, behavioral pattern detection, and conversational coaching — built solo, deployed live, and hardened against real security and reliability issues found through deliberate testing.</p>
+    <div class="capstone-stats">
+      <div class="stat"><div class="num">10</div><div class="lbl">Days, Idea to v1.0.0</div></div>
+      <div class="stat"><div class="num">3</div><div class="lbl">AI Coaching Features</div></div>
+      <div class="stat"><div class="num">4</div><div class="lbl">Real Bugs Found &amp; Fixed</div></div>
+      <div class="stat"><div class="num">₹0</div><div class="lbl">Ongoing Cost to Run</div></div>
+    </div>
+  </div>
+
+  <div class="footer-note">AB Talks 60-Day Claude AI Challenge — Capstone Completion</div>
+
+</div>
+</body>
+</html>

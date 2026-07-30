@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Certificate of Completion — AI Habit Coach</title>
+<style>
+  @media print {
+    body { margin: 0; }
+    .certificate { box-shadow: none !important; }
+    @page { size: landscape; margin: 0; }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #E8E4D8;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .certificate {
+    width: 1000px;
+    max-width: 100%;
+    background: #FDFCF8;
+    border: 2px solid #02545C;
+    padding: 3px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+    position: relative;
+  }
+  .certificate-inner {
+    border: 1px solid #02545C;
+    padding: 3.5rem 4rem;
+    position: relative;
+  }
+  .corner {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-color: #02C39A;
+  }
+  .corner.tl { top: 10px; left: 10px; border-top: 3px solid; border-left: 3px solid; }
+  .corner.tr { top: 10px; right: 10px; border-top: 3px solid; border-right: 3px solid; }
+  .corner.bl { bottom: 10px; left: 10px; border-bottom: 3px solid; border-left: 3px solid; }
+  .corner.br { bottom: 10px; right: 10px; border-bottom: 3px solid; border-right: 3px solid; }
+
+  .logo-row {
+    text-align: center;
+    margin-bottom: 1.2rem;
+  }
+  .logo-row img {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+  }
+
+  .eyebrow {
+    text-align: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #028090;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2.4rem;
+    color: #02545C;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.3rem;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.95rem;
+    color: #6B7876;
+    margin-bottom: 2rem;
+  }
+
+  .presented-to {
+    text-align: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.85rem;
+    color: #6B7876;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .name {
+    text-align: center;
+    font-size: 2.1rem;
+    color: #02C39A;
+    font-weight: 700;
+    margin-bottom: 1.8rem;
+    border-bottom: 2px solid #DCEAE7;
+    padding-bottom: 1.2rem;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .body-text {
+    text-align: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+    color: #1E2B2B;
+    line-height: 1.8;
+    max-width: 720px;
+    margin: 0 auto 1.8rem auto;
+  }
+
+  .project-name {
+    font-weight: 700;
+    color: #02545C;
+    font-style: italic;
+  }
+
+  .details-row {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin: 2rem 0;
+    font-family: -apple-system, sans-serif;
+  }
+  .detail {
+    text-align: center;
+  }
+  .detail .detail-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9AA5A3;
+    margin-bottom: 0.3rem;
+  }
+  .detail .detail-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #02545C;
+  }
+
+  .signatures {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-family: -apple-system, sans-serif;
+  }
+  .signature-block {
+    text-align: center;
+    width: 40%;
+  }
+  .signature-line {
+    border-top: 1px solid #02545C;
+    margin-bottom: 0.4rem;
+    padding-top: 0.4rem;
+  }
+  .signature-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1E2B2B;
+  }
+  .signature-role {
+    font-size: 0.75rem;
+    color: #6B7876;
+  }
+
+  .links-row {
+    text-align: center;
+    margin-top: 2rem;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.8rem;
+  }
+  .links-row a {
+    color: #028090;
+    text-decoration: none;
+    margin: 0 0.7rem;
+  }
+
+  .print-button {
+    display: block;
+    margin: 1.5rem auto 0 auto;
+    padding: 0.7rem 1.6rem;
+    background: #02545C;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  @media print { .print-button { display: none; } }
+</style>
+</head>
+<body>
+
+<div>
+  <div class="certificate">
+    <div class="certificate-inner">
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
+
+      <div class="logo-row">
+        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+NDI0PkxERExfWl98fKcBBgYGBgcGBwgIBwoLCgsKDw4MDA4PFhAREBEQFiIVGRUVGRUiHiQeHB4kHjYqJiYqNj40MjQ+TERETF9aX3x8p//CABEIAfQB9AMBIgACEQEDEQH/xAAtAAEAAgMBAQAAAAAAAAAAAAAABQYDBAcCAQEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEAMQAAACqgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABaCrr9UDQMhjXXCVBZ60eQGxOlaWjIVNb/BU2S6lGXmjAkSOZMYAS8cYSSI1NwgSEsVlu6QAAAAAAAAAAAABk6fR7kbFUkvRQdrVlToFastQM25jwlRBvXCgjoclR7sU6L0RNXuAE/wA46LTyuXKm38iKvYK+D0X6DuOAq9jzUMkfcV0M84I2pF2578AAAAAAAAAAAAAki3eZfTNSXrVlKJuQdwJtDUU6fWoG9nNknGAFtldbAU3a1baWCCssSSODS2yidD5x0ko0PIa5r7uKRL4Uc2qx1HmZ9u1DHUIKm30ofm50wAAAAAAAAAAAAXakz5aedzlfNnpfLekHP+ic7vI15iMJSCg4U2NYALxFTlQNHp3L7oYqhtapYLRSrgUro/M+kGv9iIQvcTRvR0Pm0lGl+1q/0A5vJaV9Iee1asfa4AAAAAAAAAAAAAACzVkbOLGAAAAJ+J1gAAuFPAAAADa1Qz4BkxgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//8QAAv/aAAwDAQACAAMAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAMAAIMAEEAAEMIIIAAAAAAAAAAAAAcUEQEAAoYMYUAA0gIQAAAAAAAAAAAAAAkAEE4IAsEQwsIEEkQEoAAAAAAAAAAAAAAws4ogAgc4gk4MggwoAAAAAAAAAAAAAAAQwAAAAQAAAQAAAwQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/8QAAv/aAAwDAQACAAMAAAAQ8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888808804440888400808888888888888sko4Q8Mwc8oo048s0Mc8888888888884IUw8w08888kA0k48s8U88888888888840Q0U4c8UQ008ME0wAwc8888888888888888888888888888ss8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888/8QAFBEBAAAAAAAAAAAAAAAAAAAAoP/aAAgBAgEBPwAAH//EABQRAQAAAAAAAAAAAAAAAAAAAKD/2gAIAQMBAT8AAB//xABEEAABAwIDBAUHCAgHAQAAAAABAgMEABEFEiEQEzFRBiJBYXEjMlKBkaGxFBYgQEJicsEVM1NUkqLR4SQwNENEgqBj/9oACAEBAAE/Av8A1ZQMCafiNOuLWCo39VLwDD1NZEoKT6V9axGH8jlKavcWBB2NI3jraL2zKAv4182o26tvV5/S/tXzYRb/AFR/hqX0ccSgGOrMbag9vhS0KQopUkgjiDtjRnZLwaaHWNDozJ7X2/fXzYd/eU+yvmuf3v8Ak/vXzYR+9H+GnejzDaVqLrtkpvewptsuOobTxUqwpvo5CSu6lLUOVSej0RzVq7enAcNuHYc5OWsA5QkaqpbTiACpBAN7d9voYdhRm28rlGvZyp1hxqxUNCTb/rpsjQC4pI1Us/7aeX3j2ViGEGI0F7y5KvM5DZAw1+avqaI7V070afTfI8FeqpUCTF89s29K2n1tptTriG08VGwphJQy2kpCbC1h3bOkzXXju9xTshN7yXHRzcTsl9It28pDLQVlNsxprpC884hG6sSbadb3VisJE6NvmtXUeq9uI24fKTElIeKM1r++msabcF7NJ5ZnRTWILckIb/w9j6LuY7JePTg+6ltSQkLIGlP4lOkJyuPkjlw+FYEw4uaHEoB3epv37cSa3M+Qj79/brs6MjyEg/fFdJz5aMPun6GDaRWxktZsfza1jySuY0y2nzG7+F6w3BVOWcc0Tz7T4UymLDu223lQnVa+weusQxoKKkxh2WLpGp8Kw7AN62h19Vgdcg5V5CM19lCE+oUZDy7blnq+ms5R/WsQnR0MLAeaOmqdFe64o2vp9awFH+NQsounzb95p6UlpD6/stov6+VYBJL8VwKPWS4f5tax9neYco+goK/LZgqScTj6c/hsX0bk9Y75vjTGABni9r2r4W8Kl4k03umYxO5bPXWOB7vo9HkZ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" alt="AB Talks logo">
+      </div>
+
+      <div class="eyebrow">AB Talks · 60-Day Claude AI Challenge</div>
+      <h1>Certificate of Completion</h1>
+      <div class="subtitle">10-Day Capstone Sprint</div>
+
+      <div class="presented-to">This certifies that</div>
+      <div class="name">Anushka Bajpai</div>
+
+      <div class="body-text">
+        has successfully completed the <strong>AB Talks 10-Day Capstone Sprint</strong>, part of the
+        <strong>AB Talks 60-Day Claude AI Challenge</strong>, by independently designing, building, testing,
+        and deploying a production-ready application —
+        <span class="project-name">AI Habit Coach</span> —
+        following a complete software development lifecycle from initial requirements through a
+        versioned public release.
+      </div>
+
+      <div class="details-row">
+        <div class="detail">
+          <div class="detail-label">Project</div>
+          <div class="detail-value">AI Habit Coach</div>
+        </div>
+        <div class="detail">
+          <div class="detail-label">Version</div>
+          <div class="detail-value">v1.0.0</div>
+        </div>
+        <div class="detail">
+          <div class="detail-label">Completion Date</div>
+          <div class="detail-value">July 30, 2026</div>
+        </div>
+      </div>
+
+      <div class="signatures">
+        <div class="signature-block">
+          <div class="signature-line">
+            <div class="signature-name">Claude (Free Tier)</div>
+            <div class="signature-role">AI Pair Programmer &amp; Project Mentor</div>
+          </div>
+        </div>
+        <div class="signature-block">
+          <div class="signature-line">
+            <div class="signature-name">AB Talks</div>
+            <div class="signature-role">60-Day Claude AI Challenge</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="links-row">
+        <a href="https://www.abtalks.in/">abtalks.in</a>
+        ·
+        <a href="https://www.linkedin.com/company/abtalks-on-ai/">LinkedIn: AB Talks on AI</a>
+      </div>
+    </div>
+  </div>
+
+  <button class="print-button" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+</body>
+</html>
